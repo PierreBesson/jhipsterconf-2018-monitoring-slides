@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Monitoring a JHipster microservice architecture in practice</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/star.css">
+		<link rel="stylesheet" href="css/material-icons.css">
+
+		<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="#3E8ACC" data-transition="none" data-background-transition="none">
+					<div style="font-family:Pacifico;font-size:120%;">Monitoring a JHipster microservice architecture in practice</div>
+					<img src="img/wallpaper.png" style="border:none;box-shadow:none;width:85%"/>
+					<hr class="star-light" style="line-height:1">
+					<div style="font-family:Pacifico;">Pierre Besson</div>
+					<div style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:80%;">Devoxx France 2018, April 19th 2018</div>
+				</section>
+				<section>
+					<section>
+						<h3>Who am I ?</h3>
+						<hr class="star-primary">
+						<div style="float:left;width:50%;">
+							<img src="img/photo.jpeg" width="260" style="box-shadow:none;border:none"/>
+							<h3>Pierre Besson</h3>
+							<p><a href="http://twitter.com/pibesson"><i class="fa fa-twitter"></i>
+	@pibesson</a></p>
+							<p><a href="mailto:pbesson@ippon.fr">pbesson@ippon.fr</a></p>
+						</div>
+						<br>
+						<br>
+						<div style="float:right;width:50%;font-size:80%">
+							<ul>
+								<li>Java developer @IpponTech</li>
+								<li>FullStack & DevOps</li>
+								<li>JHipster core team member</li>
+								<li>Favorite technologies:
+									<ul style="list-style-type: none">
+										<li style="text-decoration: line-through #ff0000;">☕ JAVA EE</li>
+										<li>🍃 Spring</li>
+										<li>🐳 Docker</li>
+										<li>☸️ Kubernetes</li>
+									</ul>
+								</li>
+						</div>
+					</section>
+					<section>
+						<img src="img/ippon.png" alt="" style="border:none;box-shadow:none" width="25%">
+						<div style="font-size:70%">
+						<ul>
+							<li>300 collaborators worldwide (France, USA, Australia)</li>
+							<li>5 cities in France : Paris, Nantes, Bordeaux, Lyon, Toulouse</li>
+							<li>Specialized in Java, Cloud, Big Data, JHipster Sponsor</li>
+						</ul>
+						<img src="img/ippon-rooftop.jpg" alt="" width="44%">
+						<img src="img/devoxxipponbooth.jpg" alt="" width="51%">
+						</div>
+					</section>
+					<section data-state="fullimg" data-background="img/jhipsterconf.svg"></section>
+				</section>
+			</section>
+				<section>
+					<section>
+						<h2>Introduction to microservice monitoring</h2>
+						<span style="color:red;font-size:300%"><i class="fa fa-tachometer"></i></span>
+						<h4 style="font-size:70%">Different levels of monitoring</h4>
+						<h4 style="font-size:70%">Problems & Solutions</h4>
+						<h4 style="font-size:70%">The JHipster Console</h4>
+					</section>
+					<section>
+						<h3>Supervision
+							vs 
+							Observability</h3>
+						<hr class="star-primary">
+						<div style="font-size:50%" class="fragment">
+							<table>
+								<thead>
+									<th></th>
+									<th>Supervision</th>
+									<th>Observability</th>
+								</thead>
+								<tbody>
+									<tr class="fragment">
+										<th>Positioning</th>
+										<td>External to the project</td>
+										<td>Internal to the project</td>
+									</tr>
+									<tr class="fragment">
+										<th>Data & Metrics</th>
+										<td><i>Blackbox :</i><br>
+											System (CPU, RAM, DISK), processes
+										</td>
+										<td><i>Whitebox :</i><br>
+											Healthchecks, logs, code instrumentation, tracing</td>
+									</tr>
+									<tr class="fragment">
+										<th>Responsability</th>
+										<td>Operations team</td>
+										<td>Development team</td>
+									</tr>
+									<tr class="fragment">
+										<th>Ask</th>
+										<td>- Does it work or not ?</td>
+										<td>- Why and how does it fail ?<br>
+											- What business data can we extract ?<br>
+											- Does this new feature work properly ?
+										</td>
+									</tr>
+									<tr class="fragment">
+										<th>Goals</th>
+										<td>- Assure system maintainance<br>
+											- Take actions when incident happens
+										</td>
+										<td>- Bring visibility and observability <br>
+											- Try to prevent incident from happening <br>
+										</td>
+									</tr>										
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<section>
+						<h3>The problems with monitoring microservices</h3>
+						<hr class="star-primary">
+						<div style="font-size:80%">
+							<ul>
+								<li class="fragment"><i class="fa fa-chain-broken"></i> Distributed system -> More complex to <strong>observe</strong></li>
+								<li class="fragment"><i class="fa fa-files-o"></i> Logs are <strong>dispersed</strong> in many many log files</li>
+								<li class="fragment"><i class="fa fa-search"></i> Hard to <strong>locate</strong> the microservice that caused a <strong>problem</strong></li>
+								<li class="fragment"><i class="fa fa-link"></i> Hard to <strong>follow the chain</strong> of requests</li><!--As the interractions in the system grows,  -->
+								<li class="fragment">🐇/🐢 Studying <strong>latency</strong> is hard</li>
+								<li class="fragment">💂 Resiliency mechanism are hard to configure properly</li><!-- they can even obstruct you from troubleshoting your system -->
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h3>The solution</h3>
+						<h4>Observability in 3 dimensions</h4>
+						<hr class="star-primary">
+						<div style="font-size:80%">
+						<div class="text-center">
+									<ul style="list-style-type:none">
+										<li class="fragment"><i class="fa fa-file-text-o"></i> <strong>Logs</strong>  : discrete event</li>
+										<li class="fragment"><i class="fa fa-line-chart"></i><strong>Metrics</strong> : numerical values (business or technical)</li><!--  collected by code instrumentation(ex: timer, gauge, counter)-->
+										<li class="fragment"><i class="fa fa-link"></i> <strong>Traces</strong> : chains of calls in the system (spans)</li><!--follow chain calls with by collecting requests informations with a correlation ID -> tracing -->
+									</ul>
+							</ul>
+						</div>
+						<br>
+							<div>
+							<ul style="list-style-type:none">
+								<li class="fragment"><i class="fa fa-database"></i> <strong>Store everything</strong> in one place, with proper metadata</li>
+								<li class="fragment"><i class="fa fa-search"></i> Use a search engine to <strong>query</strong> and <strong>aggregate</strong> monitoring data</li>
+								<li class="fragment"><i class="fa fa-eye"></i> <strong>Visualize</strong> using graphs <i class="fa fa-area-chart"></i> <i class="fa fa-bar-chart"></i> <i class="fa fa-pie-chart"></i> and dashboards <i class="fa fa-television"></i></li>
+								<li class="fragment"><i class="fa fa-compass"></i> Navigate around highly correlated data<!--, switch from global view to more specialized view--></li>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>The JHipster Console</h3>
+						<hr class="star-primary">
+						<div style="font-size:70%">
+							<a href="https://www.jhipster.tech/monitoring/">jhipster.tech/monitoring/</a>
+							<ul>
+								<li class="fragment">Setup the <strong>ZELK stack</strong> (Zipkin, Elasticsearch, Logstash, Kibana) in docker</li>
+								<li class="fragment">Enable reporting from any JHipster app with a <strong>few properties</strong></li>
+								<li class="fragment"><strong>Logs + metrics</strong> forwarded with <strong>logback-logstash-encoder</strong></li>
+								<li class="fragment"><strong>Traces</strong> are forwarded to Zipkin using <strong>Spring Cloud Sleuth</strong></li>
+								<li class="fragment">Logs are <strong>enriched</strong> with trace information (<strong>Trace ID</strong>)</strong></li>
+								<li class="fragment">Data is stored in Elasticseach for a certain number of days (<strong>Curator</strong>)</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h5>JHipster Console Architecture</h3>
+						<div style="font-size:70%">
+						<img src="img/jhipster-console.svg" alt="architecture">
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>JHipster Console demo</h2>
+						<span style="color:red;font-size:300%"><i class="fa fa-magic"></i></span>
+						<h4 style="font-size:70%">Setting up the Console</h4>
+						<h4 style="font-size:70%">Navigating around Kibana</h4>
+						<h4 style="font-size:70%">Creating custom visualizations and dashboards</h4>
+						<h4 style="font-size:70%">Graphing metrics, manipulating timeseries</h4>
+						<h4 style="font-size:70%">Following call traces accross services (Kibana + Zipkin)</h4>
+					</section>
+				<section>
+					<h2>Questions ?</h2>
+					<p><a href="http://twitter.com/pibesson"><i class="fa fa-twitter"></i>
+@pibesson</a></p>
+					<p><a href="https://github.com/PierreBesson"><i class="fa fa-github"></i> PierreBesson</a></p>
+					<p><a href="mailto:pbesson@ippon.fr"><i class="fa fa-envelope"></i> pbesson@ippon.fr</a></p>
+					<!-- <p>Slides available online<br><a href="https://pierrebesson.github.io/pres-jhipster-meetup-10/">pierrebesson.github.io/pres-jhipster-meetup-10/</a></p>
+					<p><br><i class="fa fa-github"></i> <a href="https://github.com/PierreBesson/meetup-jhipster-10-demo">PierreBesson/meetup-jhipster-10-demo</a>
+				 --></section>
+			</div>
+			<div class="footer">
+				<img align="right" src="img/logo-texte-devoxx-france-400.png" />
+			  </div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+				controls: false,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
