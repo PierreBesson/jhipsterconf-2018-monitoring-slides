@@ -40,23 +40,19 @@
 					<section>
 						<h3>Who am I ?</h3>
 						<hr class="star-primary">
-						<div style="float:left;width:50%;">
+						<div style="float:left;width:45%;">
 							<img src="img/photo.jpeg" width="260" style="box-shadow:none;border:none"/>
 							<h3>Pierre Besson</h3>
 							<p><a href="http://twitter.com/pibesson"><i class="fa fa-twitter"></i>
 	@pibesson</a></p>
-							<p><a href="mailto:pbesson@ippon.fr">pbesson@ippon.fr</a></p>
 						</div>
 						<br>
 						<br>
-						<div style="float:right;width:50%;font-size:80%">
+						<div style="float:right;width:55%;font-size:80%">
 							<ul>
-								<li>Java developer @IpponTech</li>
-								<li>FullStack & DevOps</li>
+								<li>FullStack & DevOps @IpponTech</li>
 								<li>JHipster core team member</li>
-								<li>Favorite technologies:
-									<ul style="list-style-type: none">
-										<li style="text-decoration: line-through #ff0000;">☕ JAVA EE</li>
+								<li><ul style="list-style-type: none">
 										<li>🍃 Spring</li>
 										<li>🐳 Docker</li>
 										<li>☸️ Kubernetes</li>
@@ -83,11 +79,11 @@
 					<section>
 						<h2>Introduction to microservice monitoring</h2>
 						<span style="color:red;font-size:300%"><i class="fa fa-tachometer"></i></span>
-						<h4 style="font-size:70%">Different levels of monitoring</h4>
+						<!-- <h4 style="font-size:70%">Different levels of monitoring</h4> -->
 						<h4 style="font-size:70%">Problems & Solutions</h4>
 						<h4 style="font-size:70%">The JHipster Console</h4>
 					</section>
-					<section>
+<!-- 					<section>
 						<h3>Supervision
 							vs 
 							Observability</h3>
@@ -101,9 +97,18 @@
 								</thead>
 								<tbody>
 									<tr class="fragment">
-										<th>Positioning</th>
-										<td>External to the project</td>
-										<td>Internal to the project</td>
+										<th>Responsability</th>
+										<td>Operations team</td>
+										<td>Development team</td>
+									</tr>
+									<tr class="fragment">
+										<th>Goals</th>
+										<td>- Assure system maintainance<br>
+											- Take actions when incident happens
+										</td>
+										<td>- Bring visibility and trust<br>
+											- Try to prevent incident from happening <br>
+										</td>
 									</tr>
 									<tr class="fragment">
 										<th>Data & Metrics</th>
@@ -114,31 +119,17 @@
 											Healthchecks, logs, code instrumentation, tracing</td>
 									</tr>
 									<tr class="fragment">
-										<th>Responsability</th>
-										<td>Operations team</td>
-										<td>Development team</td>
-									</tr>
-									<tr class="fragment">
 										<th>Ask</th>
 										<td>- Does it work or not ?</td>
 										<td>- Why and how does it fail ?<br>
 											- What business data can we extract ?<br>
 											- Does this new feature work properly ?
 										</td>
-									</tr>
-									<tr class="fragment">
-										<th>Goals</th>
-										<td>- Assure system maintainance<br>
-											- Take actions when incident happens
-										</td>
-										<td>- Bring visibility and observability <br>
-											- Try to prevent incident from happening <br>
-										</td>
-									</tr>										
+									</tr>									
 								</tbody>
 							</table>
 						</div>
-					</section>
+					</section> -->
 					<section>
 						<h3>The problems with monitoring microservices</h3>
 						<hr class="star-primary">
@@ -209,7 +200,11 @@
 						<h4 style="font-size:70%">Following call traces accross services (Kibana + Zipkin)</h4>
 					</section>
 				<section>
-					<h2>Questions ?</h2>
+					<h2>Thank you !</h2>
+					<div style="font-size:60%">
+					<p>Slides: <a href="https://pierrebesson.github.io/devoxxfr-2018-monitoring-slides/">https://pierrebesson.github.io/devoxxfr-2018-monitoring-slides/</a></p>
+					<p>Code: <a href="https://github.com/PierreBesson/devoxxfr-2018-monitoring-demo">https://github.com/PierreBesson/devoxxfr-2018-monitoring-demo</a></p>
+					</div>
 					<p><a href="http://twitter.com/pibesson"><i class="fa fa-twitter"></i>
 @pibesson</a></p>
 					<p><a href="https://github.com/PierreBesson"><i class="fa fa-github"></i> PierreBesson</a></p>
