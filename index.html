@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Monitoring a JHipster microservice architecture in practice</title>
+		<title>Monitoring JHipster applications with the JHipster Console</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/white.css">
@@ -30,11 +30,11 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-background="#3E8ACC" data-transition="none" data-background-transition="none">
-					<div style="font-family:Pacifico;font-size:120%;">Monitoring a JHipster microservice architecture in practice</div>
-					<img src="img/wallpaper.png" style="border:none;box-shadow:none;width:85%"/>
+					<div style="font-family:Pacifico;font-size:110%;">Monitoring JHipster applications<br> with the JHipster Console</div>
+					<img src="img/logo-alternate-drinking-coffee.png" style="border:none;box-shadow:none;width:30%;background-color: #3e8acc"/>
 					<hr class="star-light" style="line-height:1">
-					<div style="font-family:Pacifico;">Pierre Besson</div>
-					<div style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:80%;">Devoxx France 2018, April 19th 2018</div>
+					<div style="font-family:'Lucida Sans';">Pierre Besson</div>
+					<div style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size:80%;">JHipster Conf, June 21th 2018</div>
 				</section>
 				<section>
 					<section>
@@ -58,21 +58,12 @@
 										<li>☸️ Kubernetes</li>
 									</ul>
 								</li>
+							</ul>
+							<img src="img/ippon.png" alt="" style="border:none;box-shadow:none" width="35%">
+							<img src="img/heart.png" alt="" style="border:none;box-shadow:none" width="15%">
+							<img src="img/jhipsterA.svg" alt="" style="border:none;box-shadow:none" width="15%">
 						</div>
 					</section>
-					<section>
-						<img src="img/ippon.png" alt="" style="border:none;box-shadow:none" width="25%">
-						<div style="font-size:70%">
-						<ul>
-							<li>300 collaborators worldwide (France, USA, Australia)</li>
-							<li>5 cities in France : Paris, Nantes, Bordeaux, Lyon, Toulouse</li>
-							<li>Specialized in Java, Cloud, Big Data, JHipster Sponsor</li>
-						</ul>
-						<img src="img/ippon-rooftop.jpg" alt="" width="44%">
-						<img src="img/devoxxipponbooth.jpg" alt="" width="51%">
-						</div>
-					</section>
-					<section data-state="fullimg" data-background="img/jhipsterconf.svg"></section>
 				</section>
 			</section>
 				<section>
@@ -131,12 +122,12 @@
 						</div>
 					</section> -->
 					<section>
-						<h3>The problems with monitoring microservices</h3>
+						<h4>problems when monitoring microservices</h4>
 						<hr class="star-primary">
 						<div style="font-size:80%">
 							<ul>
 								<li class="fragment"><i class="fa fa-chain-broken"></i> Distributed system -> More complex to <strong>observe</strong></li>
-								<li class="fragment"><i class="fa fa-files-o"></i> Logs are <strong>dispersed</strong> in many many log files</li>
+								<li class="fragment"><i class="fa fa-files-o"></i> Logs are <strong>dispersed</strong> in many log files</li>
 								<li class="fragment"><i class="fa fa-search"></i> Hard to <strong>locate</strong> the microservice that caused a <strong>problem</strong></li>
 								<li class="fragment"><i class="fa fa-link"></i> Hard to <strong>follow the chain</strong> of requests</li><!--As the interractions in the system grows,  -->
 								<li class="fragment">🐇/🐢 Studying <strong>latency</strong> is hard</li>
@@ -146,7 +137,7 @@
 					</section>
 					<section>
 						<h3>The solution</h3>
-						<h4>Observability in 3 dimensions</h4>
+						<h4>the 3 ways of Observability</h4>
 						<hr class="star-primary">
 						<div style="font-size:80%">
 						<div class="text-center">
@@ -213,9 +204,9 @@
 					<p><br><i class="fa fa-github"></i> <a href="https://github.com/PierreBesson/meetup-jhipster-10-demo">PierreBesson/meetup-jhipster-10-demo</a>
 				 --></section>
 			</div>
-			<div class="footer">
+			<!-- <div class="footer">
 				<img align="right" src="img/logo-texte-devoxx-france-400.png" />
-			  </div>
+			  </div> -->
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
